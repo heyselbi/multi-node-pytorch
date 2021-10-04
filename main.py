@@ -61,7 +61,7 @@ def train(rank, world_size, n_epochs):
     gpu = torch.cuda.current_device()
     model = model.cuda()
 
-    # Batch size can be modified. 75 was chosen so each GPU gets 100 batches (8 GPUs total)
+    # Batch size can be modified.
     # There are a total of 60,000 images in MNIST dataset
     batch_size = 75
 
