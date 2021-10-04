@@ -1,0 +1,20 @@
+FROM quay.io/modh/ubi-cuda-pytorch:v1.0
+
+MAINTAINER Selbi Nuryyeva <selbi@redhat.com>
+
+# Set workspace related vars
+ENV SCRIPTS_DIR /home/mnist/src
+
+# Create the directories to setup the workspace
+RUN mkdir -p ${SCRIPTS_DIR}
+
+# Create necessary permissions to access the folders while training the model
+RUN chmod 770 /home/mnist/src
+
+WORKDIR ${SCRIPTS_DIR}
+
+# Pull scripts in (or your own script) so that we can run the MNIST benchmark
+COPY src/main.py ${SCRIPTS_DIR}
+
+# This will automatically execute the script inside the container
+ENTRYPOINT ["python3", "/home/mnist/src/main.py"]

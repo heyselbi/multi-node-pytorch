@@ -1,0 +1,35 @@
+apiVersion: "kubeflow.org/v1"
+kind: "PyTorchJob"
+metadata:
+  generateName: pyjob-multi-
+  namespace: distributed-py
+spec:
+  pytorchReplicaSpecs:
+    Master:
+      replicas: 1
+      restartPolicy: Never
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/inject: "false"
+        spec:
+          containers:
+            - name: pytorch
+              image: quay.io/selbi/ubi-cuda-py-mnist:v1.17
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+    Worker:
+      replicas: 1
+      restartPolicy: Never
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/inject: "false"
+        spec:
+          containers:
+            - name: pytorch
+              image: quay.io/selbi/ubi-cuda-py-mnist:v1.17
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
